@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum VideoStatus {
+  PENDING
+  UPLOADING
+  PROCESSING
+  AI_GENERATING
+  READY
+  SCHEDULED
+  PUBLISHED
+  FAILED
+}
+
+enum VideoVisibility {
+  PRIVATE
+  PUBLIC
+  UNLISTED
+}
+
+enum UserTier {
+  FREE
+  PRO
+}
+
+model User {
+  id                 String           @id @default(cuid())
+  email              String           @unique
+  name               String?
+  avatar             String?
+  googleId           String?
+  tier               UserTier         @default(FREE)
+  monthlyUploadCount Int              @default(0)
+  monthlyUploadBytes BigInt           @default(0)
+  lastActiveAt       DateTime?
+  deletedAt          DateTime?
+  createdAt          DateTime         @default(now())
+  channels           Channel[]
+  videos             Video[]
+  actions            UserActionLog[]
+}
+
+model Channel {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  accessToken  String
+  refreshToken String
+  expiryDate   DateTime
+  createdAt    DateTime @default(now())
+  deletedAt    DateTime?
+}
+
+model Video {
+  id                  String          @id @default(cuid())
+  userId              String
+  user                User            @relation(fields: [userId], references: [id])
+  title               String?
+  description         String?
+  hashtags            String?
+  filename            String?
+  status              VideoStatus     @default(PENDING)
+  visibility          VideoVisibility @default(PRIVATE)
+  youtubeVideoId      String?
+  scheduledAt         DateTime?
+  processingLock      String?
+  processingStartedAt DateTime?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  deletedAt           DateTime?
+}
+
+model UserActionLog {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  action     String
+  entityType String?
+  entityId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+}
+
+model YoutubeQuotaUsage {
+  id        String   @id @default(cuid())
+  day       DateTime @unique
+  unitsUsed Int      @default(0)
+  createdAt DateTime @default(now())
+}

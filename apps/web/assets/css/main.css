@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-canvas text-text font-display;
+}
+
+.bg-atmosphere {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(92, 225, 230, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(245, 196, 81, 0.16), transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(90, 107, 255, 0.12), transparent 45%),
+    #0b0d12;
+}
