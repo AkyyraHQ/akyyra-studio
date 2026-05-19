@@ -1,6 +1,0 @@
-{
-  "name": "@akyyra/config",
-  "private": true,
-  "type": "module",
-  "main": "src/index.ts"
-}

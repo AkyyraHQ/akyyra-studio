@@ -1,47 +1,16 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Dependencies
-node_modules/
-
-# Build and Cache
+﻿node_modules/
+.nuxt/
+.output/
 dist/
 build/
-out/
-.output/
-.nuxt/
-.vite/
-.turbo/
-
-# Testing
 coverage/
-
-# Environment Variables - SECURITY
 .env
 .env.*
-!.env.example
 *.pem
-
-# OS Files
+credentials.json
+client_secret.json
+logs/
+*.log
+npm-debug.log*
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDEs and Editors
-.idea/
-*.swp
-*.swo
-
-# Project specific runtime
-tmp/
-uploads/
-
+.turbo/
